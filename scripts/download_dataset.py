@@ -6,9 +6,7 @@ import os
 import argparse
 from tqdm import tqdm
 import yaml
-from pathlib import Path
 import urllib3
-import warnings
 
 # Suppress SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -354,8 +352,6 @@ def download_directories(minio_client, bucket_name, directories, base_save_path,
 
 def main():
     parser = argparse.ArgumentParser(description="Download dataset from MinIO storage")
-    parser.add_argument("--directory", type=str,
-                      help="Directory to download from (e.g., '2023-10-26-14-42-35_turnpike_afternoon_fall')")
     parser.add_argument("--type", type=str, choices=['kitti', 'bags'],
                       help="Type of data to download (kitti or bags)")
     parser.add_argument("--save-path", type=str, required=True,
