@@ -6,9 +6,7 @@ import os
 import argparse
 from tqdm import tqdm
 import yaml
-from pathlib import Path
 import urllib3
-import warnings
 
 # Suppress SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -19,8 +17,8 @@ DEFAULT_ITEMS = {
         #'depth_left',
         #'full_cloud',
         #'height_map',
-        'image_left',
-        #'image_left_color',
+        #'image_left',
+        'image_left_color',
         #'image_right',
         #'livox',
         #'local_dino_map',
@@ -64,7 +62,7 @@ bucket_name = "tartandrive2"
 # Predefined directories to download
 DOWNLOAD_DIRS = {
     'kitti': [
-        '2023-10-26-14-42-35_turnpike_afternoon_fall', 
+        #'2023-10-26-14-42-35_turnpike_afternoon_fall', 
         #'2023-11-02-16-00-43_down_meadows', 
         #'2023-11-14-14-24-21_gupta', 
         #'2023-11-14-14-26-22_gupta', 
@@ -77,48 +75,48 @@ DOWNLOAD_DIRS = {
         #'figure_8_2023-09-13-17-23-35', 
         #'figure_8_2023-09-13-17-24-26', 
         #'figure_8_2023-09-14-11-37-49', 
-        #'figure_8_morning_2023-09-12-10-37-17', 
-        #'figure_8_morning_slow_2023-09-12-11-06-32', 
-        #'figure_8_to_turnpike_2023-09-12-12-22-45', 
-        #'figure_8_to_turnpike_pt2_2023-09-12-12-28-48', 
-        #'figure_8_turnpike_2023-09-13-17-40-27', 
-        #'figure_8_turnpike_2023-09-13-17-47-52', 
-        #'gupta_2023-09-14-10-46-16', 
-        #'gupta_2023-09-14-10-47-09', 
-        #'gupta_2023-09-14-11-12-19', 
-        #'gupta_skydio_2023-09-14-11-03-09',
-        #'gupta_warehouse_2023-09-13-19-12-49',
-        #'meadows_2023-09-14-11-45-21',
-        #'meadows_2023-09-14-12-07-28',
-        #'meadows_2023-09-14-12-08-57',
-        #'meadows_2023-09-14-12-17-25',
-        #'meadows_2023-09-14-12-18-22',
-        #'sam_loop_2023-09-27-12-42-17',
-        #'sam_loop_2023-09-27-13-04-54',
-        #'slag_heap_2023-09-14-12-23-05',
-        #'slag_heap_skydio_2023-09-14-12-32-13',
-        #'slag_heap_skydio_2023-09-14-12-36-46',
-        #'turnpike_2023-09-12-12-39-19',
-        #'turnpike_2023-09-12-12-42-49',
-        #'turnpike_2023-09-12-12-47-34',
-        #'turnpike_2023-09-12-12-53-32',
-        #'turnpike_2023-09-13-17-59-09',
-        #'turnpike_2023-09-13-18-09-45',
-        #'turnpike_2023-09-13-18-15-03',
-        #'turnpike_flat_2023-09-12-13-08-55',
-        #'turnpike_flat_2023-09-12-13-11-44',
-        #'turnpike_flat_2023-09-12-13-42-26',
-        #'turnpike_flat_2023-09-12-14-16-06',
-        #'turnpike_flat_2023-09-12-14-21-03',
-        #'turnpike_skydio_2023-09-13-18-00-11',
-        #'turnpike_skydio_2023-09-14-13-57-56',
-        #'turnpike_to_gupta_flat_2023-09-12-14-31-21',
-        #'turnpike_warehouse_2023-09-13-19-03-05',
-        #'turnpike_warehouse_2023-09-14-14-05-14',
-        #'turnpike_warehouse_2023-09-14-14-07-12',
-        #'warehouse_gupta_2023-09-13-16-23-26',
-        #'warehouse_gupta_2023-09-13-16-28-57',
-        #'warehouse_to_fence_2023-09-12-10-19-17'
+        'figure_8_morning_2023-09-12-10-37-17', 
+        'figure_8_morning_slow_2023-09-12-11-06-32', 
+        'figure_8_to_turnpike_2023-09-12-12-22-45', 
+        'figure_8_to_turnpike_pt2_2023-09-12-12-28-48', 
+        'figure_8_turnpike_2023-09-13-17-40-27', 
+        'figure_8_turnpike_2023-09-13-17-47-52', 
+        'gupta_2023-09-14-10-46-16', 
+        'gupta_2023-09-14-10-47-09', 
+        'gupta_2023-09-14-11-12-19', 
+        'gupta_skydio_2023-09-14-11-03-09',
+        'gupta_warehouse_2023-09-13-19-12-49',
+        'meadows_2023-09-14-11-45-21',
+        'meadows_2023-09-14-12-07-28',
+        'meadows_2023-09-14-12-08-57',
+        'meadows_2023-09-14-12-17-25',
+        'meadows_2023-09-14-12-18-22',
+        'sam_loop_2023-09-27-12-42-17',
+        'sam_loop_2023-09-27-13-04-54',
+        'slag_heap_2023-09-14-12-23-05',
+        'slag_heap_skydio_2023-09-14-12-32-13',
+        'slag_heap_skydio_2023-09-14-12-36-46',
+        'turnpike_2023-09-12-12-39-19',
+        'turnpike_2023-09-12-12-42-49',
+        'turnpike_2023-09-12-12-47-34',
+        'turnpike_2023-09-12-12-53-32',
+        'turnpike_2023-09-13-17-59-09',
+        'turnpike_2023-09-13-18-09-45',
+        'turnpike_2023-09-13-18-15-03',
+        'turnpike_flat_2023-09-12-13-08-55',
+        'turnpike_flat_2023-09-12-13-11-44',
+        'turnpike_flat_2023-09-12-13-42-26',
+        'turnpike_flat_2023-09-12-14-16-06',
+        'turnpike_flat_2023-09-12-14-21-03',
+        'turnpike_skydio_2023-09-13-18-00-11',
+        'turnpike_skydio_2023-09-14-13-57-56',
+        'turnpike_to_gupta_flat_2023-09-12-14-31-21',
+        'turnpike_warehouse_2023-09-13-19-03-05',
+        'turnpike_warehouse_2023-09-14-14-05-14',
+        'turnpike_warehouse_2023-09-14-14-07-12',
+        'warehouse_gupta_2023-09-13-16-23-26',
+        'warehouse_gupta_2023-09-13-16-28-57',
+        'warehouse_to_fence_2023-09-12-10-19-17'
     ],
     'bags': [
         'tartandrive_v2/2022-05-06-16-03-24/kitti',
@@ -307,9 +305,8 @@ def download_directory(minio_client, bucket_name, directory, save_path, data_typ
             # For .tar files, check if base name is in DEFAULT_ITEMS
             if item.endswith('.tar') and name_without_ext in DEFAULT_ITEMS[data_type]:
                 try:
-                    # Create the full save path preserving the directory structure
-                    rel_path = os.path.relpath(item, f"{data_type}/all_topics/{directory}" if data_type == 'kitti' else f"bags/{directory}")
-                    full_save_path = os.path.join(save_path, directory, rel_path)
+                    # Create the full save path
+                    full_save_path = os.path.join(save_path, os.path.basename(item))
                     
                     # Create directory if it doesn't exist
                     os.makedirs(os.path.dirname(full_save_path), exist_ok=True)
@@ -327,14 +324,15 @@ def download_directory(minio_client, bucket_name, directory, save_path, data_typ
             if folder_name in DEFAULT_ITEMS[data_type]:
                 for item in value['files']:
                     try:
-                        # Create the full save path preserving the directory structure
-                        rel_path = os.path.relpath(item, f"{data_type}/all_topics/{directory}" if data_type == 'kitti' else f"bags/{directory}")
-                        full_save_path = os.path.join(save_path, directory, rel_path)
+                        # Create the full save path using just the relevant part of the path
+                        base_prefix = f"{data_type}/all_topics/{directory}/" if data_type == 'kitti' else f"bags/{directory}/"
+                        rel_path = os.path.relpath(item, base_prefix)
+                        full_save_path = os.path.join(save_path, rel_path)
                         
                         # Create directory if it doesn't exist
                         os.makedirs(os.path.dirname(full_save_path), exist_ok=True)
                         
-                        # Download the file using the full path from files.yaml
+                        # Download the file
                         if download_file(minio_client, bucket_name, item, full_save_path):
                             print(f"Successfully downloaded {item}")
                     except Exception as e:
@@ -354,8 +352,6 @@ def download_directories(minio_client, bucket_name, directories, base_save_path,
 
 def main():
     parser = argparse.ArgumentParser(description="Download dataset from MinIO storage")
-    parser.add_argument("--directory", type=str,
-                      help="Directory to download from (e.g., '2023-10-26-14-42-35_turnpike_afternoon_fall')")
     parser.add_argument("--type", type=str, choices=['kitti', 'bags'],
                       help="Type of data to download (kitti or bags)")
     parser.add_argument("--save-path", type=str, required=True,
