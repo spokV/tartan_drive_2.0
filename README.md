@@ -1,5 +1,7 @@
 # tartan_drive_2.0
 
+## Diff
+Add script `download_dataset.py` for non gui downloades
 
 ## Download Instructions
 Documentation is in progress, but the data is now publicly available!
