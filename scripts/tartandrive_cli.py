@@ -54,9 +54,9 @@ with open("./assets/files.yaml") as stream:
     FILE_MAP = yaml.safe_load(stream)
 
 # Minio client configuration
-access_key = "m7sTvsz28Oq3AicEDHFo"
-secret_key = "YVPGh367RnrT7G33lG6DtbaeuFZCqTE6KabMQClw"
-endpoint_url = "airlab-share-01.andrew.cmu.edu:9000"
+access_key = "nFNreHkFY2ca56vIHVaU"
+secret_key = "IHnkXfe30TjJxkVpF8LuP8wQ7kWoMRrb5QpwcK7Z"
+endpoint_url = "airlab-share-02.andrew.cmu.edu:9000"
 bucket_name = "tartandrive2"
 
 # Predefined directories to download
