@@ -39,7 +39,7 @@ mkdir -p "$SAVE_PATH"
 mkdir -p "$LOG_DIR"
 
 # Run download process in background with output logging
-nohup python3 scripts/download_dataset.py --type "$TYPE" --save-path "$SAVE_PATH" &> "$LOG_FILE" &
+setsid python3 scripts/download_dataset.py --type "$TYPE" --save-path "$SAVE_PATH" > "$LOG_FILE" 2>&1 &
 
 # Disown process to detach from terminal
 disown
