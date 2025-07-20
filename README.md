@@ -24,3 +24,4 @@ TODO:
 - [x] Import metadata_utils and data collection scripts
 - [ ] Import rosbag_to_dataset branch
 - [x] Link to all data
+- [x] Add CLI download support for headless setup
